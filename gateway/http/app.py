@@ -12,7 +12,6 @@ from data.database import init_database
 from .routers import (
     health,
     auth,
-    app_api as app_api_router,
     supports,
     self_regulation,
     files,
@@ -35,6 +34,7 @@ from .routers import (
     folders as folders_router,
     tasks as tasks_router,
 )
+from gateway.http.api_routes import register_api_routes
 from gateway.realtime.socket import socket_app
 
 FRONTEND_BUILD_DIR = os.getenv("FRONTEND_BUILD_DIR", "./ui/build")
@@ -90,7 +90,7 @@ def create_app() -> FastAPI:
     app.include_router(health.router)
 
     # Top-level /api/* routes (no version prefix) — UI bootstrap contract
-    app.include_router(app_api_router.router, prefix="/api")
+    register_api_routes(app)
 
     # Auth — mounted at BOTH paths:
     #   /auths/*        → TUTOR_BASE_URL calls (signup, user-count)

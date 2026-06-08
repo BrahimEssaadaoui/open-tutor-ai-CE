@@ -175,9 +175,15 @@ FORBIDDEN_PATTERNS = [
 ]
 
 ALLOWED_EXCEPTIONS = {
-    "/openai/": "/api/v1/providers/",
-    "/ollama/": "/api/v1/providers/",
-    "/api/chat": "/api/v1/providers/ollama/api/chat",
+    "/openai/": ("/api/v1/providers/",),
+    "/ollama/": ("/api/v1/providers/",),
+    # /api/chat/completions is the CE top-level chat endpoint (not a legacy path);
+    # /api/v1/providers/ollama/api/chat is the Ollama proxy pass-through.
+    "/api/chat": (
+        "/api/chat/completions",
+        "/api/v1/chat/completions",
+        "/api/v1/providers/ollama/api/chat",
+    ),
 }
 
 
@@ -284,14 +290,16 @@ def test_forbidden_patterns_absent(client):
 
     found = []
     for pattern in FORBIDDEN_PATTERNS:
-        required_prefix = ALLOWED_EXCEPTIONS.get(pattern)
+        allowed_prefixes = ALLOWED_EXCEPTIONS.get(pattern)
         violating = [
             p
             for p in registered
             if pattern in p
             and (
-                required_prefix is None
-                or not (p.startswith(required_prefix) or p == required_prefix)
+                allowed_prefixes is None
+                or not any(
+                    p.startswith(prefix) or p == prefix for prefix in allowed_prefixes
+                )
             )
         ]
         if violating:
