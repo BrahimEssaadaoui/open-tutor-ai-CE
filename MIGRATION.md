@@ -92,7 +92,6 @@ open-tutor-ai-CE/
 ├── media/                         ← Domain: audio (TTS/STT) + images
 ├── retrieval/                     ← Domain: RAG pipeline
 ├── llm/                           ← LLM transport base (OpenAI, Gemini, Ollama)
-├── app_platform/                  ← Domain: version / changelog / banners
 │
 ├── tests/                         ← Pytest suite (one file per domain)
 │

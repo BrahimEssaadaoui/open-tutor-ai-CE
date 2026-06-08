@@ -1,25 +1,35 @@
-from fastapi import APIRouter, Depends
+import os
+
+from fastapi import APIRouter
 from fastapi.responses import PlainTextResponse
 
-from app_platform.service import PlatformService
+from config import settings
 
 router = APIRouter(prefix="/platform", tags=["platform"])
 
-
-def _get_platform_service() -> PlatformService:
-    return PlatformService()
+_CHANGELOG_PATH = os.path.join(
+    os.path.dirname(__file__), "..", "..", "..", "CHANGELOG.md"
+)
 
 
 @router.get("/version")
-async def get_version(svc: PlatformService = Depends(_get_platform_service)):
-    return svc.get_version()
+async def get_version():
+    return {
+        "name": settings.APP_NAME,
+        "version": settings.APP_VERSION,
+        "build_hash": settings.BUILD_HASH,
+    }
 
 
 @router.get("/changelog", response_class=PlainTextResponse)
-async def get_changelog(svc: PlatformService = Depends(_get_platform_service)):
-    return svc.get_changelog()
+async def get_changelog():
+    try:
+        with open(_CHANGELOG_PATH, encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        return ""
 
 
 @router.get("/banners")
-async def get_banners(svc: PlatformService = Depends(_get_platform_service)):
-    return svc.get_banners()
+async def get_banners():
+    return []

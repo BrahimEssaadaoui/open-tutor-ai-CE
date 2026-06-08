@@ -107,7 +107,6 @@ open-tutor-ai-CE/
 ├── media/                     ← Audio (TTS/STT) + image generation
 ├── retrieval/                 ← RAG pipeline
 ├── llm/                       ← LLM transport base
-├── app_platform/              ← Version, changelog, banners
 ├── tests/                     ← Pytest suite
 │
 ├── ── Frontend ──────────────────────────────────────────────────────────
