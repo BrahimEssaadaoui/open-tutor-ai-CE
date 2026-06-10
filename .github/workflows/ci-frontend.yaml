@@ -40,7 +40,7 @@ jobs:
       - run: npm ci
 
       - name: Check formatting
-        run: npm run format -- --check
+        run: npx prettier --check "**/*.{js,ts,svelte,css,md,html,json}"
 
       - name: Check i18n keys
         run: npm run i18n:parse
@@ -71,6 +71,8 @@ jobs:
       - run: npm ci
 
       - name: Build SvelteKit (required before tests)
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
         run: npm run build
 
       - name: Run tests

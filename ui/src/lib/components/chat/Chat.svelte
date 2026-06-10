@@ -148,7 +148,7 @@
 		// Update settings store and localStorage
 		settings.update((s) => {
 			const updatedSettings = { ...s };
-			(updatedSettings as any).avatarEnabled = !(($settings as any)?.avatarEnabled);
+			(updatedSettings as any).avatarEnabled = !($settings as any)?.avatarEnabled;
 			return updatedSettings;
 		});
 		// Save to localStorage for persistence
@@ -413,12 +413,12 @@
 
 	onMount(async () => {
 		console.log('mounted');
-		
+
 		if (typeof window !== 'undefined' && !window.openTutorEvents) {
 			console.log('Creating global openTutorEvents EventTarget');
 			window.openTutorEvents = new EventTarget();
 		}
-		
+
 		window.openTutorEvents.addEventListener('chatCreated', (event: CustomEvent) => {
 			if (event.detail && event.detail.success === false) {
 				console.log('Detected failed chat creation, cleaning up');
@@ -428,7 +428,7 @@
 				}
 			}
 		});
-		
+
 		window.addEventListener('message', onMessageHandler);
 		$socket?.on('chat-events', chatEventHandler);
 
@@ -2087,7 +2087,7 @@
 		let _chatId = $chatId;
 
 		try {
-			if (selectedModels.length === 0 || selectedModels.some(model => !model)) {
+			if (selectedModels.length === 0 || selectedModels.some((model) => !model)) {
 				console.error('Invalid model selection. Setting default model...');
 				if ($models.length > 0) {
 					selectedModels = [$models[0].id];
@@ -2116,16 +2116,16 @@
 				currentChatPage.set(1);
 
 				window.history.replaceState(history.state, '', `/c/${_chatId}`);
-				
+
 				if (typeof window !== 'undefined' && window.openTutorEvents) {
 					console.log('Dispatching chatCreated event with ID:', _chatId);
 					window.openTutorEvents.dispatchEvent(
-						new CustomEvent('chatCreated', { 
-							detail: { 
+						new CustomEvent('chatCreated', {
+							detail: {
 								chatId: _chatId,
 								timestamp: Date.now(),
 								success: true
-							} 
+							}
 						})
 					);
 				}
@@ -2138,24 +2138,24 @@
 			return _chatId;
 		} catch (error) {
 			console.error('Error in initChatHandler:', error);
-			
+
 			if (typeof window !== 'undefined' && window.localStorage) {
 				window.localStorage.removeItem('pendingSupportData');
 			}
-			
+
 			if (typeof window !== 'undefined' && window.openTutorEvents) {
 				window.openTutorEvents.dispatchEvent(
-					new CustomEvent('chatCreated', { 
-						detail: { 
+					new CustomEvent('chatCreated', {
+						detail: {
 							chatId: null,
 							timestamp: Date.now(),
 							success: false,
 							error: error?.message || 'Chat initialization failed'
-						} 
+						}
 					})
 				);
 			}
-			
+
 			toast.error($i18n.t('Failed to initialize chat'));
 			return null;
 		}
