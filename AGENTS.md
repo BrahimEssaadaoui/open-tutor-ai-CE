@@ -181,6 +181,7 @@ Never commit `.env`, real secrets, API keys, uploaded user data, generated DB fi
 Reusable skills live in `.agents/skills/`. To use a skill, read its `SKILL.md` and follow the instructions inside.
 
 Available skills:
+
 - `fastapi` - Use when changing FastAPI routes, dependencies, or Pydantic models.
 - `svelte-core-bestpractices` - Use when editing or reviewing Svelte components or SvelteKit modules.
 
