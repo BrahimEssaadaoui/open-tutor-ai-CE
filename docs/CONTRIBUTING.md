@@ -42,6 +42,7 @@ pre-commit install
 ```
 
 Le hook s'exécutera automatiquement à chaque `git commit`. Il vérifie :
+
 - Le formatage Python (Black 24.8.0)
 - Le formatage frontend (Prettier — JS/TS/Svelte)
 - Les fichiers mal terminés ou avec des espaces superflus

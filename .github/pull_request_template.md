@@ -10,6 +10,8 @@
 - [ ] **Documentation:** Have you updated relevant documentation [Open TutorAI Docs](https://github.com/pr-elhajji/open-tutor-ai-docs), or other documentation sources?
 - [ ] **Dependencies:** Are there any new dependencies? Have you updated the dependency versions in the documentation?
 - [ ] **Testing:** Have you written and run sufficient tests for validating the changes?
+- [ ] **AI context:** Does this PR change architecture, tooling, conventions, or domain rules? If yes, update `AGENTS.md`.
+- [ ] **Agent skills:** Does this PR introduce a new repeatable workflow? If yes, add a skill to `.agents/skills/` and import it in `CLAUDE.md`.
 - [ ] **Code review:** Have you performed a self-review of your code, addressing any coding standard issues and ensuring adherence to the project's coding standards?
 - [ ] **Prefix:** To cleary categorize this pull request, prefix the pull request title, using one of the following:
   - **BREAKING CHANGE**: Significant changes that may affect compatibility
