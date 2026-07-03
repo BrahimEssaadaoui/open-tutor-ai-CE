@@ -11,7 +11,17 @@
 	import FocusOrchestrator from '$lib/components/student/dashboard/FocusOrchestrator.svelte';
 
 	import { getModels, getVersionUpdates } from '$lib/apis';
-	import { config, user, settings, models, theme, isDemo, demoData, originalUserData, isFullscreenAvatar} from '$lib/stores';
+	import {
+		config,
+		user,
+		settings,
+		models,
+		theme,
+		isDemo,
+		demoData,
+		originalUserData,
+		isFullscreenAvatar
+	} from '$lib/stores';
 	import { generateDemoData } from '$lib/utils/mockData';
 	import { toast } from 'svelte-sonner';
 
@@ -78,13 +88,13 @@
 			demoData.set(mockData);
 			isDemo.set(true);
 			localStorage.setItem('demoMode', 'true');
-			toast.success('Demo mode activated. You\'re now exploring with sample data.');
+			toast.success("Demo mode activated. You're now exploring with sample data.");
 		}
 	}
 
 	onMount(async () => {
 		console.log('Student layout mounted');
-		
+
 		// Check if demo mode was previously active
 		const wasDemoMode = localStorage.getItem('demoMode') === 'true';
 		if (wasDemoMode && !$isDemo) {
@@ -98,7 +108,7 @@
 			const mockData = generateDemoData();
 			demoData.set(mockData);
 		}
-		
+
 		models.set(
 			await getModels(
 				localStorage.token,
@@ -177,7 +187,9 @@
 
 		<!-- Main content with proper scrolling -->
 		<div
-			class="flex-1 overflow-y-auto {$isFullscreenAvatar ? '' : 'p-4 md:p-6'} bg-[#F4F7FE] dark:bg-gray-900 text-gray-800 dark:text-gray-100"
+			class="flex-1 overflow-y-auto {$isFullscreenAvatar
+				? ''
+				: 'p-4 md:p-6'} bg-[#F4F7FE] dark:bg-gray-900 text-gray-800 dark:text-gray-100"
 		>
 			<slot />
 		</div>
