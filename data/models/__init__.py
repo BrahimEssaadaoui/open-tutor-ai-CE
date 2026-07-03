@@ -6,6 +6,8 @@ from .chat import Chat
 from .model import ModelConfig
 from .config import AppConfig
 from .knowledge import KnowledgeBase, KnowledgeFile
+from .study_session import StudySession
+from .focus_settings import FocusSettings
 
 __all__ = [
     "User",
@@ -18,4 +20,6 @@ __all__ = [
     "AppConfig",
     "KnowledgeBase",
     "KnowledgeFile",
+    "StudySession",
+    "FocusSettings",
 ]
